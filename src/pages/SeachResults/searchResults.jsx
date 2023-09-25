@@ -86,6 +86,10 @@ useEffect(() => {
                 genre={book.volumeInfo?.categories?.join(" ")}
                 coverImage={book.volumeInfo?.imageLinks?.thumbnail}
                 authCheckCallBack={addButtonHandler}
+                gbooks_id={book.id}
+                isbn={"n/a"}
+                publisher={book.volumeInfo?.publisher}
+                year={book.volumeInfo.publishedDate}
               />
             ))}
         </div>
