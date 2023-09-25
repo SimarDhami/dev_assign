@@ -7,22 +7,38 @@ import User from "./pages/UserPage/user";
 import { Navigate } from "react-router-dom";
 import CommonLayout from "./component/commonLayout/commonLayout";
 import SearchResults from "./pages/SeachResults/searchResults";
-import { useContext } from "react";
-import { AuthContext } from "./utiils/context/Auth.context.js";
+import { RequireAuth } from "react-auth-kit";
+import Cart from "./pages/UserPage/SubPages/cart";
+import Borrowed from "./pages/UserPage/SubPages/borrowed";
+import Suggestions from "./pages/UserPage/SubPages/suggestions";
+import ProjectDetails from "./pages/AboutPage/about";
 
 function App() {
-   return (
+  return (
     <Routes>
       <Route path="/" element={<CommonLayout />}>
         <Route index element={<Home />} />
         <Route path="home" element={<Home />} />
-        <Route path="user" element={<User />} />
-<Route path="/search/:searchTerm" element={<SearchResults />} />
-
+        <Route
+          path="user"
+          element={
+            <RequireAuth loginPath="/login">
+              <User />
+            </RequireAuth>
+          }
+        >
+          <Route index element={<Suggestions />} />
+          <Route path="cart" element={<Cart />} />
+          <Route path="borrowed" element={<Borrowed />} />
+          <Route path="suggestions" element={<Suggestions />} />
+        </Route>
+        <Route path="/search/:searchTerm" element={<SearchResults />} />
         <Route path="*" element={<Navigate to="/home" replace />} />
       </Route>
+
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
+      <Route path="/about" element={<ProjectDetails />} />
     </Routes>
   );
 }
